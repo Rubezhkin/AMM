@@ -1,5 +1,5 @@
 #include <LiquidCrystal_I2C.h>
-
+//пока только интерфейс сделан
 #define I2C_ADDR    0x27
 #define LCD_COLUMNS 16
 #define LCD_LINES   2
