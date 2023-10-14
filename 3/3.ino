@@ -1,4 +1,5 @@
 #include <LiquidCrystal_I2C.h>
+#include <EEPROM.h>
 //пока только интерфейс сделан
 #define I2C_ADDR    0x27
 #define LCD_COLUMNS 16
@@ -16,8 +17,6 @@ enum class Status
   RESULT_SAVE,
   RESET_CONFIRM
 };
-
-Status status = Status::MENU_1;
 
 void getStatus(Status status)
 {
@@ -51,19 +50,49 @@ void getStatus(Status status)
   }
 }
 
+void printNum(int n, Status St)
+{
+  switch(St)
+  {
+    case Status::SET_NUM_1:
+    case Status::SET_NUM_2:
+     lcd.setCursor(12,0);
+     lcd.print(n);
+     break;
+    case Status::RESULT_SAVE:
+      lcd.setCursor(7,0);
+      lcd.print(n);
+      break;
+  }
+}
+
 void setup() {
   lcd.init();
   lcd.backlight();
-
-  
+  int n = 2;
+  pinMode(n,INPUT_PULLUP);
+  attachInterrupt(digitalPinToInterrupt(n), func, CHANGE);
 }
 
+
+
+
+Status status = Status::SET_NUM_1;
+int n1=0;
+int n2;
+
+
+void func()
+{
+  n1++;
+}
+void func1()
+{
+  n1--;
+}
 void loop() {
-  while(1)
-  {
-    getStatus(status);
-    delay(2000);
-    lcd.clear();
-    status = (Status)(((int)status+1)%7);
-  }
+ 
+  lcd.print(n1);
+  delay(1000);
+  lcd.clear();
 }
