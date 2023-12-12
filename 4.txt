@@ -5,6 +5,9 @@ int pinS3=7;
 int pinOut=8;
 int freq=0;
 
+// gnd oe s1 s0
+// vcc out s2 s3
+
 int deb_mod = 0;
 
 int min_r = 0, max_r=0;
